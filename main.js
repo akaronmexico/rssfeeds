@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const partnerTables = require('./lib/fillPartner');
 const createOutput = require('./lib/output');
+const profile = require('./lib/profile');
 const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 let feeder = new RssFeedEmitter();
@@ -27,7 +28,8 @@ const addFeeds = async () => {
 }
 
 feeder.on('new-item', async (item) => {
-    console.log("article found: " + item.title);
+    //console.log("article found: " + item.title);
+    item.title = striptags(item.title.replace(/\r?\n|\r/g, " ").trim());
     let sql = 'select * from titles where title = ?';
 	let inserts = [item.title];
     try {
@@ -41,13 +43,18 @@ feeder.on('new-item', async (item) => {
                 pubdate = item.pubDate;
             } else if (item.date && item.date != '') {
                 pubdate = item.date;
-            }        
-            var post  = [striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
-                         item.link, item.pubdate, new Date().toISOString(), new Date().toISOString(), '', item.meta.title];
+            }
+            item.published = pubdate;
+            item.feedname = item.meta.title;
+            item.src = '';
+            item.summary = striptags(item.summary.replace(/\r?\n|\r/g, " ").trim());
+            item.timestamp = now;
+            var post  = [item.title, item.summary, item.link, item.published, now, now, item.src, item.feedname, 1];
                          
-            db.all('INSERT INTO titles (title, summary, link, published, timestamp, runtime, src, feedname, currentflag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', post);
+            await db.all('INSERT INTO titles (title, summary, link, published, timestamp, runtime, src, feedname, currentflag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', post);
+            await profile.profileItem(item);
         } else {
-            console.log("article already added: " + item.title);
+            //console.log("article already added: " + item.title);
         }
     } catch (err) {
         console.log(err);
@@ -70,6 +77,7 @@ app.get('/output', async (req, res) =>
 
 app.listen(port, async () => {
     await db.open('db.sqlite');
+    await profile.resetProfile();
     await addFeeds();
     console.log(`Example app listening on port ${port}!`);
 });
