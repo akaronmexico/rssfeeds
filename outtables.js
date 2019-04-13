@@ -1,5 +1,4 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('db.sqlite','OPEN_READWRITE');
+const db = require('./database.js');
 
 const partnerLoop = async (error, results) => {
 	if (error) throw error;
@@ -8,17 +7,17 @@ const partnerLoop = async (error, results) => {
 		let sql = 'update partners set runtime=? where Partner = ?'
 		let now = new Date().toISOString();
 		db.all(sql, [now, partner],function (error, results){if (error) console.error(error);});
-    };
-    db.all('select target from partners where partner = ? order by target,keywords', [partner],function (error, results){
-        if (error) console.error(error);
-        for (let target of results) {
-            target = target.target;
-            sql = 'select * from articles where title like ? or summary like ?'
-            sql = mysql.format(sql, ['%' + target + '%', '%' + target + '%']);
-            articleLoop(sql, partner, target, '', now);
-            keywords(partner, target, now);
-        }
-    });
+		db.all('select target from partners where partner = ? order by target,keywords', [partner],function (error, results){
+			if (error) console.error(error);
+			for (let target of results) {
+				target = target.target;
+				sql = 'select * from titles where title like ? or summary like ?'
+				let params = ['%' + target + '%', '%' + target + '%'];
+				articleLoop(sql, params, partner, target, '', now);
+				keywords(partner, target, now);
+			}
+		});
+	};
 }
 
 const keywords = async (partner, target, now) => {
@@ -50,7 +49,7 @@ const keywords = async (partner, target, now) => {
 	});
 }
 
-const articleLoop = async (sql,params, partner, target, keyword, now) => {
+const articleLoop = async (sql, params, partner, target, keyword, now) => {
 	db.all(sql,params, function (error, results) {
 		if (error) console.error(error);
 		for (let article of results) {

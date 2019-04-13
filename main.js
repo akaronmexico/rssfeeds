@@ -6,8 +6,7 @@ const createOutput = require('./output');
 const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 let feeder = new RssFeedEmitter();
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('db.sqlite','OPEN_READWRITE');
+const db = require('./database.js');
 
 const addFeeds = () => {
     let query = db.all('SELECT * FROM sources',function(err,rows){

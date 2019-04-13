@@ -1,6 +1,5 @@
 const fs = require('fs');
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('db.sqlite','OPEN_READWRITE');
+const db = require('./database.js');
 
 const outputLoop = async (error, results) => {
 	if (error) throw error;
