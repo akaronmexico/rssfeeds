@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const partnerTables = require('./outtables');
+const createOutput = require('./output');
 const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 const mysql      = require('mysql');
@@ -72,9 +73,16 @@ console.log("feeds added: ");
                 //console.log(feedList[i].url);
             }
 
-app.get('/', async (req, res) => 
+app.get('/fill', async (req, res) => 
     {
         await partnerTables.fillPartnerTables();
+        var result = selectOne(res);
+    }
+);
+
+app.get('/output', async (req, res) => 
+    {
+        await createOutput.createOutput();
         var result = selectOne(res);
     }
 );

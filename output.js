@@ -34,6 +34,9 @@ const outputLoop = async (error, results, fields) => {
 	}
 };
 
-let sql = 'select distinct partner from partners';
+const createOutput = async () => {
+  let sql = 'select distinct partner from partners';
+  let query = pool.query(sql, outputLoop);
+}
 
-let query = pool.query(sql, outputLoop);
+exports.createOutput = createOutput;
