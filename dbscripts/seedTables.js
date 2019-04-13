@@ -103,6 +103,7 @@ db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'Europe', 'https://www.nytimes.com/services/xml/rss/nyt/Europe.xml', '20190306130000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'MiddleEast', 'https://www.nytimes.com/services/xml/rss/nyt/MiddleEast.xml', '20190306130000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'Business', 'http://feeds.nytimes.com/nyt/rss/Business', '20190306130000', '1')", function(err){});
+db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('BBC', 'Portuguese', 'http://feeds.bbci.co.uk/portuguese/rss.xml', '20190306130000', '1')", function(err){});
 
 db.close();
 
