@@ -5,35 +5,26 @@ const partnerTables = require('./outtables');
 const createOutput = require('./output');
 const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
-const mysql      = require('mysql');
 let feeder = new RssFeedEmitter();
-let pool = mysql.createPool({
-  connectionLimit : 10,
-  host     : 'localhost',
-  user     : 'root',
-  password : 'ifu4jb2a',
-  database : 'parser'
-});
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('db.sqlite','OPEN_READWRITE');
 
 const addFeeds = () => {
-    let query = pool.query('SELECT * FROM sources');
-    query
-        .on('error', function (err) {
-            console.log(err);
-        })
-        .on('result', function (row) {
-            feeder.add({
-                url: row.url
-            });
-        })
-        .on('end', function () {
-            // anything?
+    let query = db.all('SELECT * FROM sources',function(err,rows){
+        if (err) console.log(err);
+        else {
+            for (let row of rows){
+                feeder.add({
+                    url: row.url
+                });
+            }
             console.log("feeds added: ");
             let feedList = feeder.list();
             for (let feed of feedList) {
                 console.log(feed.url);
             }
-        });
+        }
+    });
 }
 
 addFeeds();
@@ -43,9 +34,10 @@ feeder.on('new-item', function(item) {
     console.log("article found: " + item.title);
     let sql = 'select * from articles where title = ?';
 	let inserts = [item.title];
-    sql = mysql.format(sql, inserts);
-    let query = pool.query(sql, (error, results, fields) => {
-        if (results.length < 1) {
+    db.all(sql, inserts, function(err,rows){
+        if (err) console.log(err);
+        
+        if (rows.length < 1) {
             let pubdate = null;
             let now = new Date().toISOString();
             if (item.pubdate && item.pubdate != '') {
@@ -54,11 +46,12 @@ feeder.on('new-item', function(item) {
                 pubdate = item.pubDate;
             } else if (item.date && item.date != '') {
                 pubdate = item.date;
-            }
-            // "insert into titles (title,summary,link,published,timestamp,runtime,src,feedname,currentflag)"            
-            var post  = {title: striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), summary: striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
-                         link: item.link, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: item.meta.title, currentflag: 'y'};
-            var query = pool.query('INSERT INTO articles SET ?', post, function (error, results, fields) {
+            }        
+            var post  = [striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
+                         item.link, item.pubdate, new Date(Date.UTC()).toISOString(), new Date(Date.UTC()).toISOString(), '', item.meta.title];
+                         
+            db.all('INSERT INTO titles SET title=?, ');
+            var query = pool.query('INSERT INTO articles (title, summary, link, published, timestamp, runtime, src, feedname, currentflag) VALUES (?)', post, function (error, results, fields) {
                 if (error) throw error;
             });
         } else {
@@ -91,29 +84,17 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 const selectOne = (res) => {
     let result = [];
-    let query = pool.query('SELECT * FROM articles');
-    query
-        .on('error', function (err) {
-            console.log(err);
-        })
-        .on('result', function (row) {
-            result.push(JSON.stringify(row));
-        })
-        .on('end', function () {
-            selectCount(result,res);
-        });
+    db.all('SELECT * FROM articles',function(err,rows){
+        if (err) console.log(err);
+        selectCount(JSON.stringify(rows),res);
+    });
 };
 
 const selectCount = (result, res) => {
-    let query = pool.query('SELECT count(*) FROM articles');
-    query
-        .on('error', function (err) {
-            console.log(err);
-        })
-        .on('result', function (row) {
-            result.push(JSON.stringify(row));
-        })
-        .on('end', function () {
-            res.send(result);
-        });
+    db.all('SELECT count(*) FROM articles',function(err,rows){
+        if (err) console.log(err);
+        else{
+            res.json({articles:result,count:rows});
+        }
+    });
 };
