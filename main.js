@@ -32,7 +32,7 @@ addFeeds();
 feeder.on('new-item', function(item) {
     //console.log(JSON.stringify(item))
     console.log("article found: " + item.title);
-    let sql = 'select * from articles where title = ?';
+    let sql = 'select * from titles where title = ?';
 	let inserts = [item.title];
     db.all(sql, inserts, function(err,rows){
         if (err) console.log(err);
@@ -48,12 +48,9 @@ feeder.on('new-item', function(item) {
                 pubdate = item.date;
             }        
             var post  = [striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
-                         item.link, item.pubdate, new Date(Date.UTC()).toISOString(), new Date(Date.UTC()).toISOString(), '', item.meta.title];
+                         item.link, item.pubdate, new Date().toISOString(), new Date().toISOString(), '', item.meta.title];
                          
-            db.all('INSERT INTO titles SET title=?, ');
-            var query = pool.query('INSERT INTO articles (title, summary, link, published, timestamp, runtime, src, feedname, currentflag) VALUES (?)', post, function (error, results, fields) {
-                if (error) throw error;
-            });
+            db.all('INSERT INTO titles (title, summary, link, published, timestamp, runtime, src, feedname, currentflag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', post);
         } else {
             console.log("article already added: " + item.title);
         }
@@ -68,7 +65,7 @@ console.log("feeds added: ");
 
 app.get('/fill', async (req, res) => 
     {
-        await partnerTables.fillPartnerTables();
+        //await partnerTables.fillPartnerTables();
         var result = selectOne(res);
     }
 );
@@ -84,14 +81,14 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 const selectOne = (res) => {
     let result = [];
-    db.all('SELECT * FROM articles',function(err,rows){
+    db.all('SELECT * FROM titles',function(err,rows){
         if (err) console.log(err);
         selectCount(JSON.stringify(rows),res);
     });
 };
 
 const selectCount = (result, res) => {
-    db.all('SELECT count(*) FROM articles',function(err,rows){
+    db.all('SELECT count(*) FROM titles',function(err,rows){
         if (err) console.log(err);
         else{
             res.json({articles:result,count:rows});
