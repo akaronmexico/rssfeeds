@@ -27,11 +27,11 @@
         }
         var createOutput = function() {
             fetch('http://localhost:3000/output').then(function(response) {
-                return response.json();
+                return response.status;
             }).then(function(data) {
                 console.log(data);
-            }).catch(function() {
-                console.log("Booo");
+            }).catch(function(error) {
+                console.log(error);
             });
         }
     </script>
