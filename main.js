@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const partnerTables = require('./outtables');
+const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 const mysql      = require('mysql');
 let feeder = new RssFeedEmitter();
@@ -54,7 +55,8 @@ feeder.on('new-item', function(item) {
                 pubdate = item.date;
             }
             // "insert into titles (title,summary,link,published,timestamp,runtime,src,feedname,currentflag)"            
-            var post  = {title: item.title, summary: item.summary, link: item.link, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: item.meta.title, currentflag: 'y'};
+            var post  = {title: striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), summary: striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
+                         link: item.link, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: item.meta.title, currentflag: 'y'};
             var query = pool.query('INSERT INTO articles SET ?', post, function (error, results, fields) {
                 if (error) throw error;
             });
@@ -67,7 +69,7 @@ feeder.on('new-item', function(item) {
 console.log("feeds added: ");
             let feedList = feeder.list();
             for (var i = 0; i < feedList.length; i++) {
-                console.log(feedList[i].url);
+                //console.log(feedList[i].url);
             }
 
 app.get('/', async (req, res) => 

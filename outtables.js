@@ -92,6 +92,7 @@ const articleLoop = async (sql, partner, target, keyword, now) => {
 		for (let article of results) {
 			fillTable(article, partner, target, keyword, now)
 		}
+		console.log("done.");
 	});
 }
 
@@ -101,9 +102,9 @@ const fillTable = async (article, partner, target, keyword, now) => {
 	let sql = 'select title,summary,link from ' + partner + ' where title=? and summary = ? and link=?'
 	sql = mysql.format(sql, [article.title, article.summary, article.link])
 	let query = pool.query(sql, (error, results, fields) => {
-        if (results.length < 1) {
-			console.log('insert this for ' + partner);
-			console.log(JSON.stringify(article));
+    if (results.length < 1) {
+			//console.log('insert this for ' + partner);
+			//console.log(JSON.stringify(article));
 			//insert into " + partner + " (target,keywords,title,summary,link,published,timestamp,runtime,src,feedname,currentflag)
 			let sql = 'insert into ' + partner + ' SET ?';
 			let post  = {target: target, keywords: keyword, title: article.title, summary: article.summary, link: article.link,
@@ -111,16 +112,17 @@ const fillTable = async (article, partner, target, keyword, now) => {
 						 currentflag: 'y'};
 			var query = pool.query(sql, post, function (error, results, fields) {
         if (error) throw error;
-          console.log('inserted');
+          //console.log('inserted');
       });
-		} else {console.log('exists');}
+    } else {
+			//console.log('exists');
+		}
 	});
 }
 
 const fillPartnerTables = async () => {
   let sql = 'select distinct partner from partners';
   let query = pool.query(sql, partnerLoop);
-  return 
 }
 
 exports.fillPartnerTables = fillPartnerTables;
