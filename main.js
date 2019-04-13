@@ -29,6 +29,6 @@ app.use('/ui', express.static('web'));
 app.listen(port, async () => {
     await db.open('db.sqlite');
     await profile.resetProfile();
-    await feeds.addFeeds();
-    console.log(`Example app listening on port ${port}!`);
+    feeds.addFeeds();
+    console.log(`listening on port ${port}!`);
 });
