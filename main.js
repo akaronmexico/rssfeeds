@@ -27,20 +27,20 @@ const addFeeds = () => {
             // anything?
             console.log("feeds added: ");
             let feedList = feeder.list();
-            for (var i = 0; i < feedList.length; i++) {
-                console.log(feedList[i].url);
+            for (let feed of feedList) {
+                console.log(feed.url);
             }
-            //for (var feed in feedList) { Doesnt work, odd.
-                //console.log(feed.url);
-            //}
         });
 }
 
+addFeeds();
+
 feeder.on('new-item', function(item) {
+    //console.log(JSON.stringify(item))
     console.log("article found: " + item.title);
     let sql = 'select * from articles where title = ?';
 	let inserts = [item.title];
-    let sql = mysql.format(sql, inserts);
+    sql = mysql.format(sql, inserts);
     let query = pool.query(sql, (error, results, fields) => {
         if (results.length < 1) {
             let pubdate = null;
@@ -53,7 +53,7 @@ feeder.on('new-item', function(item) {
                 pubdate = item.date;
             }
             // "insert into titles (title,summary,link,published,timestamp,runtime,src,feedname,currentflag)"            
-            var post  = {title: item.title, summary: item.summary, link: item.origlink, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: feed.meta.title, currentflag: 'y'};
+            var post  = {title: item.title, summary: item.summary, link: item.link, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: item.meta.title, currentflag: 'y'};
             var query = pool.query('INSERT INTO articles SET ?', post, function (error, results, fields) {
                 if (error) throw error;
             });
@@ -63,7 +63,11 @@ feeder.on('new-item', function(item) {
     });
 })
 
-addFeeds();
+console.log("feeds added: ");
+            let feedList = feeder.list();
+            for (var i = 0; i < feedList.length; i++) {
+                console.log(feedList[i].url);
+            }
 
 app.get('/', (req, res) => 
     {
