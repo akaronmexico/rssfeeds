@@ -65,7 +65,7 @@ console.log("feeds added: ");
 
 app.get('/fill', async (req, res) => 
     {
-        //await partnerTables.fillPartnerTables();
+        await partnerTables.fillPartnerTables();
         var result = selectOne(res);
     }
 );
