@@ -117,7 +117,10 @@ const fillTable = async (article, partner, target, keyword, now) => {
 	});
 }
 
+const fillPartnerTables = async () => {
+  let sql = 'select distinct partner from partners';
+  let query = pool.query(sql, partnerLoop);
+  return 
+}
 
-let sql = 'select distinct partner from partners';
-
-let query = pool.query(sql, partnerLoop);
+exports.fillPartnerTables = fillPartnerTables;
