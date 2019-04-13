@@ -17,6 +17,7 @@
     "popper.js": "^1.15.0",
     "pug": "^2.0.3",
     "rss-feed-emitter": "^2.0.1",
+    "sqlite3": "^4.0.6",
     "striptags": "^3.1.1"
   }
 }
