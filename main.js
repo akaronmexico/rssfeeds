@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const partnerTables = require('./outtables');
+const createOutput = require('./output');
+const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 const mysql      = require('mysql');
 let feeder = new RssFeedEmitter();
@@ -27,20 +30,20 @@ const addFeeds = () => {
             // anything?
             console.log("feeds added: ");
             let feedList = feeder.list();
-            for (var i = 0; i < feedList.length; i++) {
-                console.log(feedList[i].url);
+            for (let feed of feedList) {
+                console.log(feed.url);
             }
-            //for (var feed in feedList) { Doesnt work, odd.
-                //console.log(feed.url);
-            //}
         });
 }
 
+addFeeds();
+
 feeder.on('new-item', function(item) {
+    //console.log(JSON.stringify(item))
     console.log("article found: " + item.title);
     let sql = 'select * from articles where title = ?';
 	let inserts = [item.title];
-    let sql = mysql.format(sql, inserts);
+    sql = mysql.format(sql, inserts);
     let query = pool.query(sql, (error, results, fields) => {
         if (results.length < 1) {
             let pubdate = null;
@@ -53,7 +56,8 @@ feeder.on('new-item', function(item) {
                 pubdate = item.date;
             }
             // "insert into titles (title,summary,link,published,timestamp,runtime,src,feedname,currentflag)"            
-            var post  = {title: item.title, summary: item.summary, link: item.origlink, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: feed.meta.title, currentflag: 'y'};
+            var post  = {title: striptags(item.title.replace(/\r?\n|\r/g, " ").trim()), summary: striptags(item.summary.replace(/\r?\n|\r/g, " ").trim()),
+                         link: item.link, published: item.pubdate, timestamp: now, runtime: now, src: '', feedname: item.meta.title, currentflag: 'y'};
             var query = pool.query('INSERT INTO articles SET ?', post, function (error, results, fields) {
                 if (error) throw error;
             });
@@ -63,10 +67,22 @@ feeder.on('new-item', function(item) {
     });
 })
 
-addFeeds();
+console.log("feeds added: ");
+            let feedList = feeder.list();
+            for (var i = 0; i < feedList.length; i++) {
+                //console.log(feedList[i].url);
+            }
 
-app.get('/', (req, res) => 
+app.get('/fill', async (req, res) => 
     {
+        await partnerTables.fillPartnerTables();
+        var result = selectOne(res);
+    }
+);
+
+app.get('/output', async (req, res) => 
+    {
+        await createOutput.createOutput();
         var result = selectOne(res);
     }
 );
