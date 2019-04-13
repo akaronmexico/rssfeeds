@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-const partnerTables = require('./outtables');
-const createOutput = require('./output');
+const partnerTables = require('./lib/outtables');
+const createOutput = require('./lib/output');
 const striptags = require('striptags');
 const RssFeedEmitter = require('rss-feed-emitter');
 let feeder = new RssFeedEmitter();
-const db = require('./database.js');
+const db = require('./lib/database.js');
 
 const addFeeds = () => {
     let query = db.all('SELECT * FROM sources',function(err,rows){

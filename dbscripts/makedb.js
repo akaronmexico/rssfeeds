@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 try{
 
-const db = new sqlite3.Database('db.sqlite','OPEN_CREATE');
+const db = new sqlite3.Database('../db.sqlite','OPEN_CREATE');
 	
 db.on('open',function(evt){console.log("DB Open",evt)});
 db.on('trace',function(evt){console.log("DB Trace",evt)});
