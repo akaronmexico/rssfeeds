@@ -10,7 +10,7 @@
   {
     "id": "bin2",
     "bin": "2",
-    "keywords:": [
+    "tags:": [
       "Europe",
       "europe",
       "Brexit"
@@ -19,7 +19,7 @@
   {
     "id": "bin3",
     "bin": "3",
-    "keywords:": [
+    "tags:": [
       "May Day",
       "Paris"
     ]
@@ -27,7 +27,7 @@
   {
     "id": "bin4",
     "bin": "4",
-    "keywords:": [
+    "tags:": [
       "Assange",
       "jail"
     ]
@@ -35,7 +35,7 @@
   {
     "id": "bin5",
     "bin": "5",
-    "keywords:": [
+    "tags:": [
       "Venezuela",
       "Maduro"
     ]

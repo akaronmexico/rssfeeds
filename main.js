@@ -7,6 +7,7 @@ const createOutput = require('./lib/output');
 const profile = require('./lib/profile');
 const feeds = require('./lib/feeds');
 const db = require('./lib/database.js');
+const elastic = require('./lib/elastic.js');
 
 app.use(helmet());
 
@@ -27,8 +28,9 @@ app.get('/output', async (req, res) =>
 app.use('/ui', express.static('web'));
 
 app.listen(port, async () => {
-    await db.open('db.sqlite');
-    await profile.resetProfile();
-    feeds.addFeeds();
+    await elastic.setup();
+   // await db.open('db.sqlite');
+   // await profile.resetProfile();
+   // feeds.addFeeds();
     console.log(`listening on port ${port}!`);
 });
