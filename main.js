@@ -1,7 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const app = express();
-const port = 3000;
+const port = 4000;
 const partnerTables = require('./lib/fillPartner');
 const createOutput = require('./lib/output');
 const profile = require('./lib/profile');
@@ -29,7 +29,7 @@ app.use('/ui', express.static('web'));
 
 app.listen(port, async () => {
      await db.open('db.sqlite');
-    await profile.resetProfile();
+    // await profile.resetProfile();
     feeds.addFeeds();
     console.log(`listening on port ${port}!`);
 });
