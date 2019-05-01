@@ -13,7 +13,7 @@ db.serialize(function() {
   db.run("CREATE TABLE sources (id INTEGER PRIMARY KEY AUTOINCREMENT, src TEXT, rssname TEXT, url TEXT, timestamp TEXT, currentflag INTEGER)");
   db.run("CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, summary TEXT, link TEXT, published INTEGER, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)");
   db.run("CREATE TABLE partners (id INTEGER PRIMARY KEY AUTOINCREMENT, partner TEXT, target TEXT, keywords TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)");
-  db.run("CREATE TABLE partnerdata (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT, keywords TEXT, partner TEXT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER, content TEXT)");
+  db.run("CREATE TABLE partnerdata (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT, keywords TEXT, partner TEXT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER, score NUMERIC, content TEXT)");
 });
 
 db.close();

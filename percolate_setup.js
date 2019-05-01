@@ -107,7 +107,9 @@ const addPercolatorQueries = async function(indexName, mappingName) {
             let targetCounter = 1;
             targets.forEach(target => {
                 let keywords = target.keywords;
+                
                 let keywordCounter = 1;
+                
                 keywords.forEach(keyword => {
                     const json = {"query": {"match":{"summary":keyword}}};
                     inserts.push(insertDoc(indexName, partner + '_' + target.target + '_' + keywordCounter, mappingName, json));

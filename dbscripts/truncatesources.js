@@ -12,7 +12,9 @@ db.on('error',function(evt){console.log("DB Error",evt)});
 
 db.serialize(function() {
   db.run("DELETE from titles");
+  db.run("DELETE from partners");
   db.run("DELETE from sources");
+  db.run("DELETE from partnerdata");
 });
 
 db.close();
