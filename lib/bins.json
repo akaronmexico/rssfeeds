@@ -2,15 +2,16 @@
   {
     "id": "bin1",
     "bin": "1",
-    "keywords:": [
+    "tags": [
       "USA",
-      "politics"
+      "politics",
+      "trump"
     ]
   },
   {
     "id": "bin2",
     "bin": "2",
-    "tags:": [
+    "tags": [
       "Europe",
       "europe",
       "Brexit"
@@ -19,25 +20,31 @@
   {
     "id": "bin3",
     "bin": "3",
-    "tags:": [
-      "May Day",
-      "Paris"
+    "tags": [
+      "Military"
     ]
   },
   {
     "id": "bin4",
     "bin": "4",
-    "tags:": [
-      "Assange",
+    "tags": [
       "jail"
     ]
   },
   {
     "id": "bin5",
     "bin": "5",
-    "tags:": [
+    "tags": [
       "Venezuela",
       "Maduro"
+    ]
+  },
+  {
+    "id": "bin5",
+    "bin": "5",
+    "tags": [
+      "Putin",
+      "Russia"
     ]
   }
 ]

@@ -28,9 +28,8 @@ app.get('/output', async (req, res) =>
 app.use('/ui', express.static('web'));
 
 app.listen(port, async () => {
-    await elastic.setup();
-   // await db.open('db.sqlite');
-   // await profile.resetProfile();
-   // feeds.addFeeds();
+     await db.open('db.sqlite');
+    await profile.resetProfile();
+    feeds.addFeeds();
     console.log(`listening on port ${port}!`);
 });
