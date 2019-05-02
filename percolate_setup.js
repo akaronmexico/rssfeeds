@@ -107,12 +107,16 @@ const addPercolatorQueries = async function(indexName, mappingName) {
             let targetCounter = 1;
             targets.forEach(target => {
                 let keywords = target.keywords;
-                
+                let targetCountry = target.target;
+                inserts.push(insertDoc(indexName, partner + '_' + targetCountry, mappingName, {"query": {"match":{"summary":targetCountry}}}));
                 let keywordCounter = 1;
                 
                 keywords.forEach(keyword => {
-                    const json = {"query": {"match":{"summary":keyword}}};
+                    let json = {"query": {"match":{"summary":keyword}}};
                     inserts.push(insertDoc(indexName, partner + '_' + target.target + '_' + keywordCounter, mappingName, json));
+                    // Target and Keyword
+                    json = {"query": {"query_string": {"default_field": "summary","query": "(" + targetCountry + ") AND (" + keyword + ")"}}}
+                    inserts.push(insertDoc(indexName, partner + '_' + target.target + 'TANDK' + '_' + keywordCounter, mappingName, json));
                     keywordCounter++;
                 })
                 targetCounter++;
@@ -122,17 +126,7 @@ const addPercolatorQueries = async function(indexName, mappingName) {
 };
 
 const setup = async function() {
-     await db.open('db.sqlite');
-    const percMapping = {
-         properties: {
-             summary: {
-                type: "text"
-            },
-             query: {
-                 type: "percolator"
-             }
-         }
-    } 
+    await db.open('db.sqlite');
     
     const mapping = {
                properties: {
