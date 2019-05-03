@@ -42,6 +42,12 @@ module.exports = (app) => {
         res.send(result);
     });
     
+    app.get('/api/get/boards', async (req, res) => {
+		// TODO select distinct partners?
+        const result = await api.getBoards();
+        res.send(result);
+    });
+    
     app.get('/api/get/keywords/:partner', async (req, res) => {
 		// TODO select distinct keywords where partner=?  ought we do a one-many table for keywords? probs
         const result = await api.getPartners(req.params.partner);

@@ -25,6 +25,7 @@
     "rss-feed-emitter": "^2.0.1",
     "socket.io": "^2.2.0",
     "sqlite3": "^4.0.6",
-    "striptags": "^3.1.1"
+    "striptags": "^3.1.1",
+    "uuid": "^3.3.2"
   }
 }
