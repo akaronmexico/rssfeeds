@@ -116,7 +116,7 @@ const addPercolatorQueries = async function(indexName, mappingName) {
                     inserts.push(insertDoc(indexName, partner + '_' + target.target + '_' + keywordCounter, mappingName, json));
                     // Target and Keyword
                     json = {"query": {"query_string": {"default_field": "summary","query": "(" + targetCountry + ") AND (" + keyword + ")"}}}
-                    inserts.push(insertDoc(indexName, partner + '_' + target.target + 'TANDK' + '_' + keywordCounter, mappingName, json));
+                    inserts.push(insertDoc(indexName, partner + '_' + target.target + '_TANDK' + '_' + keywordCounter, mappingName, json));
                     keywordCounter++;
                 })
                 targetCounter++;

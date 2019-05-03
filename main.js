@@ -8,9 +8,10 @@ const createOutput = require('./lib/output');
 const profile = require('./lib/profile');
 const feeds = require('./lib/feeds');
 const db = require('./lib/database.js');
-const elastic = require('./lib/elastic.js');
 
 app.use(helmet());
+
+require('./routes')(app);
 
 app.get('/fill', async (req, res) => 
     {
