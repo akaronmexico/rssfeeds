@@ -9,9 +9,7 @@ db.on('trace',function(evt){console.log("DB Trace",evt)});
 db.on('profile',function(evt){console.log("DB Profile",evt)});
 db.on('error',function(evt){console.log("DB Error",evt)});
 
-db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Netherlands','Libya','China','20190306133300','1')", function(err){});
-db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Netherlands','Congo','India','20190306133300','1')", function(err){});
-db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Netherlands','Iraq','Belarus','20190306133300','1')", function(err){});
+/*
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Netherlands','Nigeria','Syria','20190306133300','1')", function(err){});
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Netherlands','Turkey','Putin','20190306133300','1')", function(err){});
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Georgia','Libya','Russia','20190306133300','1')", function(err){});
@@ -75,14 +73,62 @@ db.run("insert into partners (partner,target,keywords,timestamp,currentflag) val
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Romania','Turkey','','20190306133300','1')", function(err){});
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Romania','Turkey','','20190306133300','1')", function(err){});
 db.run("insert into partners (partner,target,keywords,timestamp,currentflag) values ('Romania','Turkey','','20190306133300','1')", function(err){});
+*/
+db.run("insert into partners (partner,timestamp,currentflag) values ('Georgia', '20190306133300','1')", function(err){
+	if (err) {
+      console.log(err.message);
+    }
+    let lastId = this.lastID;
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Russia'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Libya'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Congo'], function(err){});
+});
+
+db.run("insert into partners (partner,timestamp,currentflag) values ('Netherlands', '20190306133300','1')", function(err){
+	if (err) {
+      console.log(err.message);
+    }
+    let lastId = this.lastID;
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Belarus'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Congo'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Libya'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Turkey'], function(err){});
+});
+
+db.run("insert into partners (partner,timestamp,currentflag) values ('Romania', '20190306133300','1')", function(err){
+	if (err) {
+      console.log(err.message);
+    }
+    let lastId = this.lastID;
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Russia'], function(err){});
+    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Turkey'], function(err){});
+});
+
+db.run("insert into bins (bin) values ('Aggressor')", function(err){
+	if (err) {
+      console.log(err.message);
+    }
+    let lastId = this.lastID;
+    db.run("insert into keywords (id, keyword) values (?,?)", [lastId, 'conflict'], function(err){});
+});
+
+db.run("insert into bins (bin) values ('Rogue')", function(err){
+	if (err) {
+      console.log(err.message);
+    }
+    let lastId = this.lastID;
+    db.run("insert into keywords (id, keyword) values (?,?)", [lastId, 'election'], function(err){});
+});
+
 /** * */
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('Reuters', 'worldNews', 'http://feeds.reuters.com/Reuters/worldNews', '20190305013000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('Reuters', 'somalia', 'http://feeds.reuters.com/reuters/AFRICAsomaliaNews', '20190305092600', '1')", function(err){});
-
-
-
-
-
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('Reuters', 'Libya', 'http://feeds.reuters.com/reuters/AFRICAlibyaNews', '20190305160000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('Reuters', 'Money', 'http://feeds.reuters.com/news/wealth', '20190305160000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('Reuters', 'Business', 'http://feeds.reuters.com/reuters/businessNews', '20190305160000', '1')", function(err){});
@@ -108,7 +154,6 @@ db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'Europe', 'https://www.nytimes.com/services/xml/rss/nyt/Europe.xml', '20190306130000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'MiddleEast', 'https://www.nytimes.com/services/xml/rss/nyt/MiddleEast.xml', '20190306130000', '1')", function(err){});
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('NYT', 'Business', 'http://feeds.nytimes.com/nyt/rss/Business', '20190306130000', '1')", function(err){});
-
 db.run("insert into sources (src,rssname,url,timestamp,currentflag) values ('BBC', 'Portuguese', 'http://feeds.bbci.co.uk/portuguese/rss.xml', '20190306130000', '1')", function(err){});
 
 

@@ -13,6 +13,9 @@ db.serialize(function() {
   db.run("CREATE TABLE sources (id INTEGER PRIMARY KEY AUTOINCREMENT, src TEXT, rssname TEXT, url TEXT, timestamp TEXT, currentflag INTEGER)");
   db.run("CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)");
   db.run("CREATE TABLE partners (id INTEGER PRIMARY KEY AUTOINCREMENT, partner TEXT, target TEXT, keywords TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)");
+  db.run("CREATE TABLE targets (id INT, target TEXT, FOREIGN KEY (id) REFERENCES partners ON DELETE CASCADE)");
+  db.run("CREATE TABLE bins (id INTEGER PRIMARY KEY AUTOINCREMENT, bin TEXT)");
+  db.run("CREATE TABLE keywords (id INT, keyword TEXT, FOREIGN KEY (id) REFERENCES bins ON DELETE CASCADE)");
   db.run("CREATE TABLE partnerdata (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT, keywords TEXT, partner TEXT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER, score NUMERIC, content TEXT, status TEXT)");
 });
 
