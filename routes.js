@@ -32,13 +32,18 @@ module.exports = (app) => {
         res.send(result);
     });
     
+    app.get('/api/feeds', async (req, res) => {
+        const result = await api.getFeeds();
+        res.send(result);
+    });
+    
     app.post('/api/partners', async (req, res) => {
         const result = await api.createPartners(req.body);
         res.send(result);
     });
     
     app.post('/api/targets', async (req, res) => {
-        const result = await api.createPartners(req.body);
+        const result = await api.createTargets(req.body);
         res.send(result);
     });
     
@@ -52,13 +57,18 @@ module.exports = (app) => {
         res.send(result);
     });
     
+    app.post('/api/feeds', async (req, res) => {
+        const result = await api.createFeeds(req.body);
+        res.send(result);
+    });
+    
     app.put('/api/partners', async (req, res) => {
-        const result = await api.createPartners(req.body);
+        const result = await api.updatePartners(req.body);
         res.send(result);
     });
     
     app.put('/api/targets', async (req, res) => {
-        const result = await api.createPartners(req.body);
+        const result = await api.updateTargets(req.body);
         res.send(result);
     });
     
@@ -69,6 +79,36 @@ module.exports = (app) => {
     
     app.put('/api/keywords', async (req, res) => {
         const result = await api.updateKeywords(req.body);
+        res.send(result);
+    });
+    
+    app.put('/api/feeds', async (req, res) => {
+        const result = await api.updateFeeds(req.body);
+        res.send(result);
+    });
+    
+    app.delete('/api/partners/:partnerId', async (req, res) => {
+        const result = await api.deletePartners(req.params.partnerId);
+        res.send(result);
+    });
+    
+    app.delete('/api/targets/:targetId', async (req, res) => {
+        const result = await api.deleteTargets(req.params.targetId);
+        res.send(result);
+    });
+    
+    app.delete('/api/bins/:binId', async (req, res) => {
+        const result = await api.deleteBins(req.params.binId);
+        res.send(result);
+    });
+    
+    app.delete('/api/keywords/:keywordId', async (req, res) => {
+        const result = await api.deleteKeywords(req.params.keywordId);
+        res.send(result);
+    });
+    
+    app.delete('/api/keywords/:feedId', async (req, res) => {
+        const result = await api.deleteFeeds(req.params.feedId);
         res.send(result);
     });
     
