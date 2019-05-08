@@ -79,11 +79,11 @@ db.run("insert into partners (partner,timestamp,currentflag) values ('Georgia', 
       console.log(err.message);
     }
     let lastId = this.lastID;
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Russia'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Libya'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Congo'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Russia'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Libya'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Congo'], function(err){});
 });
 
 db.run("insert into partners (partner,timestamp,currentflag) values ('Netherlands', '20190306133300','1')", function(err){
@@ -91,12 +91,12 @@ db.run("insert into partners (partner,timestamp,currentflag) values ('Netherland
       console.log(err.message);
     }
     let lastId = this.lastID;
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Belarus'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Congo'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Libya'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Turkey'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Belarus'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Congo'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Libya'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Turkey'], function(err){});
 });
 
 db.run("insert into partners (partner,timestamp,currentflag) values ('Romania', '20190306133300','1')", function(err){
@@ -104,10 +104,10 @@ db.run("insert into partners (partner,timestamp,currentflag) values ('Romania', 
       console.log(err.message);
     }
     let lastId = this.lastID;
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Iraq'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Russia'], function(err){});
-    db.run("insert into targets (id, target) values (?,?)", [lastId, 'Turkey'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Iraq'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Nigeria'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Russia'], function(err){});
+    db.run("insert into targets (partnerId, target) values (?,?)", [lastId, 'Turkey'], function(err){});
 });
 
 db.run("insert into bins (bin) values ('Aggressor')", function(err){
@@ -115,7 +115,11 @@ db.run("insert into bins (bin) values ('Aggressor')", function(err){
       console.log(err.message);
     }
     let lastId = this.lastID;
-    db.run("insert into keywords (id, keyword) values (?,?)", [lastId, 'conflict'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 1, 'conflict'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 2, 'beat'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 3, 'Putin'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 4, 'fight'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 5, 'missle'], function(err){});
 });
 
 db.run("insert into bins (bin) values ('Rogue')", function(err){
@@ -123,7 +127,11 @@ db.run("insert into bins (bin) values ('Rogue')", function(err){
       console.log(err.message);
     }
     let lastId = this.lastID;
-    db.run("insert into keywords (id, keyword) values (?,?)", [lastId, 'election'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 6, 'election'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 7, 'fraud'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 8, 'waste'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 9, 'misuse'], function(err){});
+    db.run("insert into keywords (binId, targetId, keyword) values (?,?,?)", [lastId, 10, 'abuse'], function(err){});
 });
 
 /** * */
