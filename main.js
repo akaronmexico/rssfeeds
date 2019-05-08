@@ -30,10 +30,9 @@ app.get('/output', async (req, res) =>
 app.use('/ui', express.static('web'));
 app.use('/ui-app', express.static('web-app'));
 app.listen(port, async () => {
-     await db.open('db.sqlite');
-     await db.run('PRAGMA foreign_keys = ON');
+    await db.open('db.sqlite');
+    await db.run('PRAGMA foreign_keys = ON');
     
-    // await profile.resetProfile();
     feeds.addFeeds();
     console.log(`listening on port ${port}!`);
 });
