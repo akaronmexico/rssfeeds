@@ -107,7 +107,7 @@ module.exports = (app) => {
         res.send(result);
     });
     
-    app.delete('/api/keywords/:feedId', async (req, res) => {
+    app.delete('/api/feeds/:feedId', async (req, res) => {
         const result = await api.deleteFeeds(req.params.feedId);
         res.send(result);
     });
