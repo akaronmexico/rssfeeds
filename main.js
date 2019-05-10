@@ -1,7 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const app = express();
-
+const cors = require('cors')
 const port = 4000;
 const partnerTables = require("./lib/fillPartner");
 const createOutput = require("./lib/output");
@@ -10,7 +10,7 @@ const feeds = require("./lib/feeds");
 const db = require("./lib/database.js");
 
 app.use(helmet());
-
+app.use(cors());
 require("./routes")(app);
 
 app.get("/fill", async (req, res) => {
@@ -25,7 +25,7 @@ app.get("/output", async (req, res) => {
 
 app.use("/ui", express.static("web"));
 app.use("/ui-app", express.static("web-app"));
-app.listen(port, async () => {
+app.listen(port, '192.168.20.110',async () => {
   await db.open("db.sqlite");
   await db.run("PRAGMA foreign_keys = ON");
 

@@ -13,6 +13,7 @@
     "@types/socket.io": "^2.1.2",
     "async-sema": "^3.0.0",
     "bootstrap": "^4.3.1",
+    "cors": "^2.8.5",
     "elasticsearch": "^15.4.1",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
