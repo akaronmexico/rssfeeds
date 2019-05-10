@@ -186,39 +186,44 @@ db.run("insert into partners (partner,target,keywords,timestamp,currentflag) val
     }
   );
 
-  db.run("insert into bins (bin, colorvalues ('Aggressor', 'red-500')", function(err) {
-    if (err) {
-      console.log(err.message);
+  db.run(
+    "insert into bins (bin, color) values ('Aggressor', 'red-500')",
+    function(err) {
+      if (err) {
+        console.log(err.message);
+      }
+      let lastId = this.lastID;
+      db.run(
+        "insert into keywords (binId, targetId, keyword) values (?,?,?)",
+        [lastId, 1, "conflict"],
+        function(err) {}
+      );
+      db.run(
+        "insert into keywords (binId, targetId, keyword) values (?,?,?)",
+        [lastId, 2, "beat"],
+        function(err) {}
+      );
+      db.run(
+        "insert into keywords (binId, targetId, keyword) values (?,?,?)",
+        [lastId, 3, "Putin"],
+        function(err) {}
+      );
+      db.run(
+        "insert into keywords (binId, targetId, keyword) values (?,?,?)",
+        [lastId, 4, "fight"],
+        function(err) {}
+      );
+      db.run(
+        "insert into keywords (binId, targetId, keyword) values (?,?,?)",
+        [lastId, 5, "missle"],
+        function(err) {}
+      );
     }
-    let lastId = this.lastID;
-    db.run(
-      "insert into keywords (binId, targetId, keyword) values (?,?,?)",
-      [lastId, 1, "conflict"],
-      function(err) {}
-    );
-    db.run(
-      "insert into keywords (binId, targetId, keyword) values (?,?,?)",
-      [lastId, 2, "beat"],
-      function(err) {}
-    );
-    db.run(
-      "insert into keywords (binId, targetId, keyword) values (?,?,?)",
-      [lastId, 3, "Putin"],
-      function(err) {}
-    );
-    db.run(
-      "insert into keywords (binId, targetId, keyword) values (?,?,?)",
-      [lastId, 4, "fight"],
-      function(err) {}
-    );
-    db.run(
-      "insert into keywords (binId, targetId, keyword) values (?,?,?)",
-      [lastId, 5, "missle"],
-      function(err) {}
-    );
-  });
+  );
 
-  db.run("insert into bins (bin, color) values ('Rogue', 'blue-600')", function(err) {
+  db.run("insert into bins (bin, color) values ('Rogue', 'blue-600')", function(
+    err
+  ) {
     if (err) {
       console.log(err.message);
     }
