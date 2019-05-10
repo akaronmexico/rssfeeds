@@ -1,6 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const app = express();
+const bodyParser = require('body-parser');
 const cors = require('cors')
 const port = 4000;
 const partnerTables = require("./lib/fillPartner");
@@ -9,8 +10,11 @@ const profile = require("./lib/profile");
 const feeds = require("./lib/feeds");
 const db = require("./lib/database.js");
 
+
 app.use(helmet());
 app.use(cors());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 require("./routes")(app);
 
 app.get("/fill", async (req, res) => {
