@@ -30,10 +30,10 @@ try {
       "CREATE TABLE targets (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT, partnerId INTEGER, CONSTRAINT fk_partners FOREIGN KEY (partnerId) REFERENCES partners(id) ON DELETE CASCADE)"
     );
     db.run(
-      "CREATE TABLE bins (id INTEGER PRIMARY KEY AUTOINCREMENT, bin TEXT, description TEXT)"
+      "CREATE TABLE bins (id INTEGER PRIMARY KEY AUTOINCREMENT, bin TEXT, description TEXT, color TEXT)"
     );
     db.run(
-      "CREATE TABLE keywords (id INTEGER PRIMARY KEY AUTOINCREMENT, targetId INTEGER, keyword TEXT, binId INTEGER, CONSTRAINT fk_bins FOREIGN KEY (binId) REFERENCES bins(id) ON DELETE CASCADE, CONSTRAINT fk_targets FOREIGN KEY (targetId) REFERENCES bins(id) ON DELETE CASCADE)"
+      "CREATE TABLE keywords (id INTEGER PRIMARY KEY AUTOINCREMENT, targetId INTEGER, keyword TEXT, binId INTEGER, CONSTRAINT fk_bins FOREIGN KEY (binId) REFERENCES bins(id) ON DELETE CASCADE, CONSTRAINT fk_targets FOREIGN KEY (targetId) REFERENCES targets(id) ON DELETE CASCADE)"
     );
     db.run(
       "CREATE TABLE partnerdata (id INTEGER PRIMARY KEY AUTOINCREMENT, target TEXT, keywords TEXT, partner TEXT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER, score NUMERIC, content TEXT, status TEXT, binId INTEGER)"
