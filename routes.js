@@ -1,8 +1,11 @@
 const api = require("./lib/api.js");
 
 module.exports = app => {
+  app.get("/api/partnerboards", async (req, res) => {
+    const result = await api.getPartnerBoards();
+    res.send(result);
+  });
   app.get("/api/partnerdata", async (req, res) => {
-    console.log("getting partnerdata for all partners");
     const result = await api.getPartnerData();
     res.send(result);
   });
