@@ -186,7 +186,7 @@ db.run("insert into partners (partner,target,keywords,timestamp,currentflag) val
     }
   );
 
-  db.run("insert into bins (bin) values ('Aggressor')", function(err) {
+  db.run("insert into bins (bin, colorvalues ('Aggressor', 'red-500')", function(err) {
     if (err) {
       console.log(err.message);
     }
@@ -218,7 +218,7 @@ db.run("insert into partners (partner,target,keywords,timestamp,currentflag) val
     );
   });
 
-  db.run("insert into bins (bin) values ('Rogue')", function(err) {
+  db.run("insert into bins (bin, color) values ('Rogue', 'blue-600')", function(err) {
     if (err) {
       console.log(err.message);
     }
