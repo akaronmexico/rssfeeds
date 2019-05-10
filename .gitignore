@@ -2,3 +2,5 @@ node_modules/
 logs/*
 output/*
 db.sqlite
+ui-web/*
+web-app/*
