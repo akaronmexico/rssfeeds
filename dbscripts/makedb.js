@@ -18,6 +18,27 @@ try {
 
   db.serialize(function() {
     db.run(
+      "DROP TABLE sources"
+    );
+    db.run(
+      "DROP TABLE titles"
+    );
+    db.run(
+      "DROP TABLE partners"
+    );
+    db.run(
+      "DROP TABLE targets"
+    );
+    db.run(
+      "DROP TABLE bins"
+    );
+    db.run(
+      "DROP TABLE keywords"
+    );
+     db.run(
+      "DROP TABLE partnerdata"
+    );
+    db.run(
       "CREATE TABLE sources (id INTEGER PRIMARY KEY AUTOINCREMENT, src TEXT, rssname TEXT, url TEXT, timestamp TEXT, currentflag INTEGER)"
     );
     db.run(
