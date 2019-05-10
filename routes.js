@@ -40,6 +40,11 @@ module.exports = app => {
     res.send(result);
   });
 
+  app.get("/api/partnerconfig/:partnerId", async (req, res) => {
+    const result = await api.getPartnerConfig();
+    res.send(result);
+  });
+
   app.post("/api/partnerconfig/:partnerId", async (req, res) => {
     const result = await api.createPartnerConfig(req.body);
     res.send(result);
