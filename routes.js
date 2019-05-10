@@ -44,6 +44,11 @@ module.exports = app => {
     const result = await api.getPartnerConfig();
     res.send(result);
   });
+  
+  app.get("/api/partnerconfig", async (req, res) => {
+    const result = await api.getPartnerConfig();
+    res.send(result);
+  });
 
   app.post("/api/partnerconfig/:partnerId", async (req, res) => {
     const result = await api.createPartnerConfig(req.body);
