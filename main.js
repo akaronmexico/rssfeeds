@@ -9,11 +9,26 @@ const createOutput = require("./lib/output");
 const profile = require("./lib/profile");
 const feeds = require("./lib/feeds");
 const db = require("./lib/database.js");
-
+const io = require("socket.io")(app);
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+io.on("connection", socket => {
+  let previousId;
+  const safeJoin = currentId => {
+    socket.leave(previousId);
+    socket.join(currentId);
+    previousId = currentId;
+  };
+
+  socket.on("subscribe", boardId => {
+    safeJoin(boardId);
+    socket.emit("scrumboard", { status: "joined" });
+  });
+});
+
 require("./routes")(app);
 
 app.get("/fill", async (req, res) => {
