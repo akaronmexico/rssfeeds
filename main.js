@@ -1,8 +1,8 @@
 const express = require("express");
 const helmet = require("helmet");
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors')
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const port = 4000;
 const partnerTables = require("./lib/fillPartner");
 const createOutput = require("./lib/output");
@@ -10,10 +10,9 @@ const profile = require("./lib/profile");
 const feeds = require("./lib/feeds");
 const db = require("./lib/database.js");
 
-
 app.use(helmet());
 app.use(cors());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 require("./routes")(app);
 
@@ -29,7 +28,7 @@ app.get("/output", async (req, res) => {
 
 app.use("/ui", express.static("web"));
 app.use("/ui-app", express.static("web-app"));
-app.listen(port, '192.168.20.110',async () => {
+app.listen(port, "192.168.20.110", async () => {
   await db.open("db.sqlite");
   await db.run("PRAGMA foreign_keys = ON");
 

@@ -44,7 +44,7 @@ module.exports = app => {
     const result = await api.getPartnerConfig();
     res.send(result);
   });
-  
+
   app.get("/api/partnerconfig", async (req, res) => {
     const result = await api.getPartnerConfig();
     res.send(result);

@@ -17,27 +17,13 @@ try {
   });
 
   db.serialize(function() {
-    db.run(
-      "DROP TABLE sources"
-    );
-    db.run(
-      "DROP TABLE titles"
-    );
-    db.run(
-      "DROP TABLE partners"
-    );
-    db.run(
-      "DROP TABLE targets"
-    );
-    db.run(
-      "DROP TABLE bins"
-    );
-    db.run(
-      "DROP TABLE keywords"
-    );
-     db.run(
-      "DROP TABLE partnerdata"
-    );
+    db.run("DROP TABLE sources");
+    db.run("DROP TABLE titles");
+    db.run("DROP TABLE partners");
+    db.run("DROP TABLE targets");
+    db.run("DROP TABLE bins");
+    db.run("DROP TABLE keywords");
+    db.run("DROP TABLE partnerdata");
     db.run(
       "CREATE TABLE sources (id INTEGER PRIMARY KEY AUTOINCREMENT, src TEXT, rssname TEXT, url TEXT, timestamp TEXT, currentflag INTEGER)"
     );
@@ -45,7 +31,6 @@ try {
       "CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)"
     );
     db.run(
-    
       "CREATE TABLE partners (id INTEGER PRIMARY KEY AUTOINCREMENT, partner TEXT, nativeName TEXT, avatar TEXT, lat REAL, long REAL, capital TEXT, region TEXT, subregion TEXT, target TEXT, keywords TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)"
     );
     db.run(
