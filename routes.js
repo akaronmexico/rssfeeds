@@ -1,6 +1,10 @@
 const api = require("./lib/api.js");
 
 module.exports = (app, socket) => {
+   app.get("/api/histogram", async (req, res) => {
+    const result = await api.getArticleHistogram();
+    res.send(result);
+  });
   app.get("/api/partnerboards", async (req, res) => {
     const result = await api.getPartnerBoards();
     res.send(result);
