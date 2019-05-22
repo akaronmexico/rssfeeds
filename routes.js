@@ -129,6 +129,18 @@ module.exports = (app, socket) => {
     const result = await api.deleteFeeds(req.params.feedId);
     res.send(result);
   });
+  
+  app.get("/api/allbypartner", async (req, res) => {
+    // TODO
+    const result = await api.getAllByPartner();
+    res.send(result);
+  });
+
+  app.get("/api/allbysubregion", async (req, res) => {
+    // TODO
+    const result = await api.getAllBySubregion();
+    res.send(result);
+  });
 
   app.get("/api/partnerdata/from/:fromDate", async (req, res) => {
     // TODO
