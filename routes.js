@@ -1,7 +1,7 @@
 const api = require("./lib/api.js");
 
 module.exports = (app, socket) => {
-   app.get("/api/histogram", async (req, res) => {
+  app.get("/api/histogram", async (req, res) => {
     const result = await api.getArticleHistogram();
     res.send(result);
   });
@@ -133,7 +133,7 @@ module.exports = (app, socket) => {
     const result = await api.deleteFeeds(req.params.feedId);
     res.send(result);
   });
-  
+
   app.get("/api/allbypartner", async (req, res) => {
     // TODO
     const result = await api.getAllByPartner();
