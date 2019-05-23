@@ -7,15 +7,15 @@ module.exports = (app, socket) => {
   });
   app.get("/api/partnerhistogram", async (req, res) => {
     const result = await api.getPartnerHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
   app.get("/api/sourcehistogram", async (req, res) => {
     const result = await api.getSourceHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
   app.get("/api/targethistogram", async (req, res) => {
     const result = await api.getTargetHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
   app.get("/api/keywordmetrics", async (req, res) => {
     const result = await api.getTopTerms();
@@ -23,17 +23,17 @@ module.exports = (app, socket) => {
   });
   app.get("/api/targetmetrics", async (req, res) => {
     const result = await api.getPartnerHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
   app.get("/api/partnermetrics", async (req, res) => {
     const result = await api.getPartnerHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
   app.get("/api/sourcemetrics", async (req, res) => {
     const result = await api.getPartnerHistogram();
-    res.send(JSON.stringify(result,null,2));
+    res.send(JSON.stringify(result, null, 2));
   });
-  
+
   app.get("/api/partnerboards", async (req, res) => {
     const result = await api.getPartnerBoards();
     res.send(result);
