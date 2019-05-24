@@ -13,6 +13,10 @@ module.exports = (app, socket) => {
     const result = await api.getSourceHistogram();
     res.send(JSON.stringify(result, null, 2));
   });
+  app.get("/api/sourcehistogram/:rssId", async (req, res) => {
+    let results = await api.getDetailedSourceHistogram(req.params.rssId);
+    res.send(results);
+  });
   app.get("/api/targethistogram", async (req, res) => {
     const result = await api.getTargetHistogram();
     res.send(JSON.stringify(result, null, 2));
