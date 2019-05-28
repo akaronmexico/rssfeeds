@@ -3,20 +3,20 @@ const sqlite3 = require("sqlite3").verbose();
 try {
   const db = new sqlite3.Database("db.sqlite", "OPEN_CREATE");
 
-  db.on("open", function(evt) {
+  db.on("open", function (evt) {
     console.log("DB Open", evt);
   });
-  db.on("trace", function(evt) {
+  db.on("trace", function (evt) {
     console.log("DB Trace", evt);
   });
-  db.on("profile", function(evt) {
+  db.on("profile", function (evt) {
     console.log("DB Profile", evt);
   });
-  db.on("error", function(evt) {
+  db.on("error", function (evt) {
     console.log("DB Error", evt);
   });
 
-  db.serialize(function() {
+  db.serialize(function () {
     db.run("DROP TABLE sources");
     db.run("DROP TABLE titles");
     db.run("DROP TABLE partners");
@@ -27,9 +27,7 @@ try {
     db.run(
       "CREATE TABLE sources (id INTEGER PRIMARY KEY AUTOINCREMENT, src TEXT, rssname TEXT, url TEXT, timestamp TEXT, currentflag INTEGER)"
     );
-    db.run(
-      "CREATE TABLE titles (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, summary TEXT, link TEXT, published TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)"
-    );
+    db.run("CREATE TABLE titles (`uuid`	TEXT NOT NULL UNIQUE,`title`	TEXT,`summary`	TEXT,`link`	TEXT,`published`	TEXT,`timestamp`	TEXT,`runtime`	TEXT,`src`	TEXT,`feedname`	TEXT,`currentflag`	INTEGER, PRIMARY KEY(`uuid`));");
     db.run(
       "CREATE TABLE partners (id INTEGER PRIMARY KEY AUTOINCREMENT, partner TEXT, nativeName TEXT, avatar TEXT, lat REAL, long REAL, capital TEXT, region TEXT, subregion TEXT, target TEXT, keywords TEXT, timestamp TEXT, runtime TEXT, src TEXT, feedname TEXT, currentflag INTEGER)"
     );

@@ -1,8 +1,28 @@
 const api = require("./lib/api.js");
 
 module.exports = (app, socket) => {
+
+  app.get('/api/totals', async (req, res) => {
+    const histogram = await api.getArticleHistogram();
+    const checkedHistogram = await api.getCheckedHistogram();
+    const totals = await api.getArticleCount();
+    const titles = await api.getTitleCount();
+    const feeds = await api.getFeedCount();
+    res.send({
+      count: totals,
+      checked: titles,
+      feeds: feeds,
+      histogram: histogram,
+      checkedHistogram: checkedHistogram
+    });
+  })
+
   app.get("/api/histogram", async (req, res) => {
     const result = await api.getArticleHistogram();
+    res.send(result);
+  });
+  app.get("/api/checkedhistogram", async (req, res) => {
+    const result = await api.getCheckedHistogram();
     res.send(result);
   });
   app.get("/api/partnerhistogram", async (req, res) => {
@@ -88,6 +108,7 @@ module.exports = (app, socket) => {
   });
 
   app.post("/api/partnerconfig/:partnerId", async (req, res) => {
+    console.log('creating config...')
     const result = await api.createPartnerConfig(req.body);
     res.send(result);
   });

@@ -1,10 +1,12 @@
 const elastic = require("./lib/elastic.js");
 const db = require("./lib/database.js");
 
-const { Client } = require("@elastic/elasticsearch");
+const {
+  Client
+} = require("@elastic/elasticsearch");
 const client = new Client({
   node: "http://localhost:9200",
-  log: "error"
+  log: "trace"
 });
 
 const buildProfiles = async () => {
@@ -22,16 +24,19 @@ const buildProfiles = async () => {
         target.keywords = keywordResults;
         targets.push(target);
       }
-      profiles.push({ partner: partner.partner, targets: targets });
+      profiles.push({
+        partner: partner.partner,
+        targets: targets
+      });
     }
-    console.log("profiles: " + JSON.stringify(profiles, null, 2));
+    // console.log("profiles: " + JSON.stringify(profiles, null, 2));
     return profiles;
   } catch (err) {
     console.log(err);
   }
 };
 
-const dropIndex = async function(indexName) {
+const dropIndex = async function (indexName) {
   console.log("dropping index: " + indexName);
   return await client.indices
     .delete({
@@ -43,12 +48,13 @@ const dropIndex = async function(indexName) {
     });
 };
 
-const addMapping = async function(indexName, mapping) {
+const addMapping = async function (indexName, mapping) {
   console.log("creating mapping for index: " + indexName);
   return await client.indices
     .putMapping({
       index: indexName,
       type: "_doc",
+      include_type_name: true,
       body: mapping
     })
     .catch(err => {
@@ -56,14 +62,15 @@ const addMapping = async function(indexName, mapping) {
     });
 };
 
-const createIndex = async function(indexName) {
+const createIndex = async function (indexName) {
   console.log("creating index: " + indexName);
   return await client.indices.create({
-    index: indexName
+    index: indexName,
+    include_type_name: true
   });
 };
 
-const insertDoc = async function(indexName, _id, mappingType, data) {
+const insertDoc = async function (indexName, _id, mappingType, data) {
   console.log(indexName + ": adding document with id: " + _id);
   return await client.index({
     index: indexName,
@@ -73,7 +80,7 @@ const insertDoc = async function(indexName, _id, mappingType, data) {
   });
 };
 
-const addPercolatorQueries = async function(indexName, mappingName) {
+const addPercolatorQueries = async function (indexName, mappingName) {
   const profiles = await buildProfiles();
   const inserts = [];
   profiles.forEach(item => {
@@ -104,12 +111,12 @@ const addPercolatorQueries = async function(indexName, mappingName) {
           insertDoc(
             indexName,
             partner +
-              "_" +
-              target.target +
-              "_" +
-              keyword.binId +
-              "_" +
-              keywordCounter,
+            "_" +
+            target.target +
+            "_" +
+            keyword.binId +
+            "_" +
+            keywordCounter,
             mappingName,
             json
           )
@@ -127,13 +134,13 @@ const addPercolatorQueries = async function(indexName, mappingName) {
           insertDoc(
             indexName,
             partner +
-              "_" +
-              target.target +
-              "_" +
-              keyword.binId +
-              "_TANDK" +
-              "_" +
-              keywordCounter,
+            "_" +
+            target.target +
+            "_" +
+            keyword.binId +
+            "_TANDK" +
+            "_" +
+            keywordCounter,
             mappingName,
             json
           )
@@ -146,7 +153,7 @@ const addPercolatorQueries = async function(indexName, mappingName) {
   return await Promise.all(inserts);
 };
 
-const setup = async function() {
+const setup = async function () {
   await db.open("db.sqlite");
 
   const mapping = {
